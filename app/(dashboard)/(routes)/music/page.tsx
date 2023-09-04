@@ -37,10 +37,10 @@ const MusicPage = () => {
     try {
       setMusic(undefined);
 
-      const response = await axios.post('/api/music', values);
-      console.log(response)
+      // const response = await axios.post('/api/music', values);
+      // console.log(response)
 
-      setMusic(response.data.audio);
+      // setMusic(response.data.audio);
       form.reset();
     } catch (error: any) {
       if (error?.response?.status === 403) {
@@ -53,7 +53,7 @@ const MusicPage = () => {
     }
   }
 
-  return ( 
+  return (
     <div>
       <Heading
         title="Music Generation"
@@ -64,8 +64,8 @@ const MusicPage = () => {
       />
       <div className="px-4 lg:px-8">
         <Form {...form}>
-          <form 
-            onSubmit={form.handleSubmit(onSubmit)} 
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
             className="
               rounded-lg 
               border 
@@ -86,8 +86,8 @@ const MusicPage = () => {
                   <FormControl className="m-0 p-0">
                     <Input
                       className="border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent"
-                      disabled={isLoading} 
-                      placeholder="Piano solo" 
+                      disabled={isLoading}
+                      placeholder="Piano solo"
                       {...field}
                     />
                   </FormControl>
@@ -114,7 +114,7 @@ const MusicPage = () => {
         )}
       </div>
     </div>
-   );
+  );
 }
- 
+
 export default MusicPage;

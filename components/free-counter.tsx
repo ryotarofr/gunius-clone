@@ -24,7 +24,7 @@ export const FreeCounter = ({
   if (!mounted) {
     return null;
   }
-  
+
 
   if (isPro) {
     return null;
@@ -35,9 +35,9 @@ export const FreeCounter = ({
       <Card className="bg-white/10 border-0">
         <CardContent className="py-6">
           <div className="text-center text-sm text-white mb-4 space-y-2">
-            <p>
+            <div>
               {apiLimitCount} / {MAX_FREE_COUNTS} Free Generations
-            </p>
+            </div>
             <Progress className="h-3" value={(apiLimitCount / MAX_FREE_COUNTS) * 100} />
           </div>
           <Button onClick={proModal.onOpen} variant="premium" className="w-full">

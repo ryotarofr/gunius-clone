@@ -8,6 +8,29 @@ datasource db {
   relationMode = "prisma"
 }
 
+model Naisei {
+  id              Int            @id @default(autoincrement())
+  naisei          String
+  created_at      DateTime       @default(now())
+  evaluation_type EvaluationType
+  userId          String?
+}
+
+enum EvaluationType {
+  A
+  B
+  C
+  D
+  E
+}
+
+model Assessment {
+  id          String   @id @default(cuid())
+  userId      String
+  achievement Int?
+  createdAt   DateTime @default(now())
+}
+
 model UserApiLimit {
   id        String   @id @default(cuid())
   userId    String   @unique
