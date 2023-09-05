@@ -1,3 +1,6 @@
+
+// export const dynamic = "force-dynamic"
+
 const LandingLayout = ({
   children
 }: {
@@ -9,7 +12,7 @@ const LandingLayout = ({
         {children}
       </div>
     </main>
-   );
+  );
 }
- 
+
 export default LandingLayout;
