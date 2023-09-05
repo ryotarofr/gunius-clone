@@ -9,7 +9,7 @@ datasource db {
 
 model Naisei {
   id              Int            @id @default(autoincrement())
-  naisei          String
+  naisei          String?
   created_at      DateTime       @default(now())
   evaluation_type EvaluationType
   userId          String?

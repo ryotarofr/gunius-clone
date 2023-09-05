@@ -20,6 +20,8 @@ import { BiEdit } from "react-icons/bi"
 import { GrAdd } from "react-icons/gr"
 import { MdPlaylistAdd } from "react-icons/md"
 
+// export const dynamic = "force-dynamic"
+
 const EditorPage = () => {
   const [naisei, setNaisei] = useState<any[]>([""])
   const [naiseiId, setNaiseiId] = useState<any[]>([""])
@@ -52,7 +54,7 @@ const EditorPage = () => {
     };
     axios.post(apiUrl, createData)
       .then(response => {
-        toast.success('Naiseiを作成しました!!')
+        toast.success('Created Naisei!!')
         return response
       })
       .catch(error => {
@@ -129,13 +131,13 @@ const EditorPage = () => {
                   </div>
                 ))}
               </button>
-              <div className="">
-                {naisei.map(item => (
 
-                  <div className="text-slate-300 my-4" key={item} onClick={() => handleItemClick(item)}>{item}</div>
+              <div className="w-44">
+                {naisei.map(item => (
+                  <div className="text-slate-300 my-4 truncate" key={item} onClick={() => handleItemClick(item)}>{item}</div>
                 ))}
               </div>
-              <div className="">
+              <div className="hidden md:block">
                 {naiseiCreatedAt.map(item => (
 
                   <div className="text-slate-400 ml-4 my-4 text-md" key={item} onClick={() => handleItemClick(item)}>{item}</div>
@@ -153,7 +155,7 @@ const EditorPage = () => {
         </div>
         <Editor />
       </div>
-      <GetAssessmentByUser />
+      {/* <GetAssessmentByUser /> */}
     </div>
   )
 }

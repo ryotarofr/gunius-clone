@@ -180,8 +180,29 @@ export const Editor: FC<{
     });
   }
 
+  // useEffect(() => {
+  //   setNaisei("")
+  //   const apiUrl = `/api/naisei/${naiseiId}`;
+  //   const updatedData = {
+  //     // リクエストボディに送信するデータ
+  //     naisei: naisei,
+  //     evaluation_type: evaluationType,
+  //   };
+  //   axios.put(apiUrl, updatedData)
+  //     .then(response => {
+  //       toast.success('Naiseiをアップデートしました!!')
+  //       return response
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  //   // toast.success('Naiseiをアップデートしました!!')
+
+  // }, [naiseiId])
+
   const handleUpdate = async (e: SyntheticEvent) => {
     e.preventDefault();
+    setNaisei("")
     const apiUrl = `/api/naisei/${naiseiId}`;
     const updatedData = {
       // リクエストボディに送信するデータ
@@ -190,13 +211,13 @@ export const Editor: FC<{
     };
     axios.put(apiUrl, updatedData)
       .then(response => {
-        toast.success('Naiseiをアップデートしました!!')
+        toast.success('Updated Naisei!!!!')
         return response
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-    toast.success('Naiseiをアップデートしました!!')
+    // toast.success('Naiseiをアップデートしました!!')
 
 
   };
@@ -235,21 +256,22 @@ export const Editor: FC<{
         <form
         // onSubmit={handleUpdate}
         >
-          <label className='text-white'>
-            Evaluation Type:
-            <select className='text-white' value={evaluationType} onChange={(e) => setEvaluationType(e.target.value)}>
+          <label className=''>
+            <div className='text-white'>Evaluation Type:</div>
+
+            <select className='' value={evaluationType} onChange={(e) => setEvaluationType(e.target.value)}>
               {Object.values(EvaluationType).map((value) => (
                 <option key={value} value={value}>{value}</option>
               ))}
             </select>
           </label>
-          <div className='text-white'>
+          {/* <div className='text-white'>
             {EvaluationType.A}
             {EvaluationType.B}
             {EvaluationType.C}
             {EvaluationType.D}
             {EvaluationType.E}
-          </div>
+          </div> */}
           <Button className='' onClick={handleUpdate}>Update Naisei</Button>
           <Toaster
             position="bottom-right"

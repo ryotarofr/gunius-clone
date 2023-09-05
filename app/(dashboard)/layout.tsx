@@ -3,6 +3,8 @@ import { Sidebar } from "@/components/sidebar";
 import { checkSubscription } from "@/lib/subscription";
 import { getApiLimitCount } from "@/lib/api-limit";
 
+// export const dynamic = "force-dynamic"
+
 const DashboardLayout = async ({
   children,
 }: {
@@ -22,7 +24,7 @@ const DashboardLayout = async ({
         <Navbar />
         {children}
       </main>
-    </div>
+    </div >
   );
 }
 

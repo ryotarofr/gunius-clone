@@ -4,10 +4,12 @@ import { Heading } from "@/components/heading";
 import { SubscriptionButton } from "@/components/subscription-button";
 import { checkSubscription } from "@/lib/subscription";
 
+// export const dynamic = "force-dynamic"
+
 const SettingsPage = async () => {
   const isPro = await checkSubscription();
 
-  return ( 
+  return (
     <div>
       <Heading
         title="Settings"
@@ -23,8 +25,8 @@ const SettingsPage = async () => {
         <SubscriptionButton isPro={isPro} />
       </div>
     </div>
-   );
+  );
 }
- 
+
 export default SettingsPage;
 
