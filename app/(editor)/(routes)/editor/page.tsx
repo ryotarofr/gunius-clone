@@ -71,7 +71,7 @@ const EditorPage = () => {
     fetch()
     console.log("/editorでデータをフェッチ");
 
-  }, [])
+  }, [fetch])
 
   useEffect(() => {
     const resNaisei = data.map((item: any) => item.naisei)

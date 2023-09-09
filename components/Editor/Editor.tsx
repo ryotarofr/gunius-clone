@@ -66,7 +66,7 @@ export const Editor: FC<{
     } else {
       setNaisei(""); // selectedNaiseiIdがnullの場合も空に設定
     }
-  }, [selectedId])
+  }, [selectedId, data])
   console.log("naisei", naisei);
 
   const exportAsJson = (contenAsJson: string) => {
