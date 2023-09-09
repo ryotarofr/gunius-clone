@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 // import prisma from "../../../../prisma";
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 import { auth } from "@clerk/nextjs";
+import prismadb from "@/lib/prismadb";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 // export async function main() {
 //   try {
@@ -17,7 +18,7 @@ export const GET = async (req: Request, res: NextResponse) => {
   try {
     const { userId }: any = auth();
     // await main();
-    const getAllAssesmentByUser = await prisma.assessment.findMany({
+    const getAllAssesmentByUser = await prismadb.assessment.findMany({
       where: {
         userId: userId
       }
@@ -26,6 +27,6 @@ export const GET = async (req: Request, res: NextResponse) => {
   } catch (err) {
     return NextResponse.json({ message: "Error", err }, { status: 500 });
   } finally {
-    await prisma.$disconnect();
+    await prismadb.$disconnect();
   }
 };

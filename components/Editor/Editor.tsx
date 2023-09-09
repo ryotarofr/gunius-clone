@@ -1,56 +1,29 @@
 "use client"
 
-import { $getRoot, $getSelection, EditorState, createEditor } from 'lexical';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { $getRoot, $getSelection } from 'lexical';
+import { SyntheticEvent, useEffect, useState, FC } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
+import axios from 'axios';
+
+import styles from "./Editor.module.scss";
 
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import { PlainTextPlugin } from '@lexical/react/LexicalPlainTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
-import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
-
-// import { SyntheticEvent, useState } from 'react';
-// import axios from 'axios';
-
-import { format } from 'date-fns';
-import ExportPlugin from '../plugins/ExportPluginHTML';
 import ExportPluginJson from '../plugins/ExportPluginJson';
 import { ToolbarPlugin } from '../plugins/ToolbarPlugin';
 import { AutoFocusPlugin } from '../plugins/AutoFocusPlugin';
-
-import { MarkdownShortcutPlugin } from '@lexical/react/LexicalMarkdownShortcutPlugin';
-import styles from "./Editor.module.scss";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
 import { CodeHighlightPlugin } from "../plugins/CodeHighlightPlugin";
 import { nodes } from "./nodes";
 import { theme } from './editorTheme';
 import { InlineToolbarPlugin } from '../plugins/InlineToolbarPlugin';
-import TreeViewPlugin from '../plugins/TreeViewPlugin';
-import { ImportPlugin } from '../plugins/ImportPlugin';
-import { $generateNodesFromDOM } from '@lexical/html';
-import { ImportPluginHTML } from '../plugins/ImportPluginHTML';
-import { FC } from 'react';
-import { Toaster, toast } from 'react-hot-toast';
-// import Button from '../Button/Button';
-
-// import { useUser } from '@/app/hooks/useUser';
-import { useDateStore } from '@/hooks/SelectDateStore';
-import axios from 'axios';
 import { useNaiseiIdStore } from '@/hooks/useNaiseiIdStore';
 import { Button } from '../ui/button';
-import { auth } from '@clerk/nextjs';
-import { Divide } from 'lucide-react';
-
-
-export const loadData = (): string => {
-  // JSON.stringify(editorState)
-  const text = '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"example.","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
-  const text2 = '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"this is editorState example.a","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
-  return text2;
-};
+import useGetAllNaisei from '@/hooks/useGetNaiseiAll';
 
 
 const EvaluationType = {
@@ -61,35 +34,9 @@ const EvaluationType = {
   E: 'E',
 }
 
-interface Item {
-  id: number;
-  naisei: string;
-  created_at?: string
-  // 他のプロパティがあればここに追加
-}
-
-// const theme = {
-//   // Theme styling goes here
-//   // ...
-// }
-
-function MyCustomAutoFocusPlugin() {
-  const [editor] = useLexicalComposerContext();
-
-  // useEffect(() => {
-  //   editor.focus();
-  //   console.log("editorrr", editor);
-
-  // }, [editor]);
-
-  return null;
-}
-
 function onError(error: any) {
   console.error(error);
 }
-
-// const defaltText = 'default text daaaa'
 
 export const Editor: FC<{
   defaultContentAsHTML?: string;
@@ -98,33 +45,29 @@ export const Editor: FC<{
   // naisei idを取得
   const selectedId = useNaiseiIdStore((state) => state.selectedId)
 
-
-  // const exportAsHTML = (contenAsHTML: string) => {
-  // setData(contenAsHTML)
-  // console.log("exporthtml", contenAsHTML);
-  // };
-
-
-
-  const [data, setData] = useState()
-
   const [evaluationType, setEvaluationType] = useState(EvaluationType.A);
   const [naisei, setNaisei] = useState('')
-  const [naiseiId, setNaiseiId] = useState('')
-  const [currentDate, setCurrentDate] = useState('');
+  const [isLoading, setIsLoading] = useState(true)
+  const { data, loading, hasErrors, fetch }: any = useGetAllNaisei()
 
+  useEffect(() => {
+    setNaisei("")
+    setIsLoading(false)
 
-  // const { user, isLoading, subscription } = useUser()
-
-  const selectedDay = useDateStore((state) => state.selectedDay);
-  // const setSelectedDay = useDateStore((state) => state.setSelectedDay);
-  const footer = selectedDay ? (
-    <div className='text-lg'>select : {format(selectedDay, 'yyyy-MM-dd')}.</div>
-  ) : (
-    <div>Please pick a day.</div>
-  );
-  const footerDate = footer.props.children[1]
-
+    if (selectedId !== null) {
+      // data配列から選択されたIDに一致する要素を探す
+      const selectedData = data.find((item: any) => item.id === selectedId);
+      if (selectedData) {
+        setNaisei(selectedData.naisei);
+        setIsLoading(true)
+      } else {
+        setNaisei(""); // データが見つからない場合は空に設定
+      }
+    } else {
+      setNaisei(""); // selectedNaiseiIdがnullの場合も空に設定
+    }
+  }, [selectedId])
+  console.log("naisei", naisei);
 
   const exportAsJson = (contenAsJson: string) => {
     // const jsonString = JSON.stringify(contenAsJson);
@@ -141,35 +84,6 @@ export const Editor: FC<{
   };
 
 
-  useEffect(() => {
-    setNaisei('');
-    setEvaluationType("")
-    // setData(undefined)
-    setNaiseiId('')
-    // setCurrentDate('')
-    const apiUrl = `/api/naisei/${selectedId}`;
-    axios.get(apiUrl)
-      .then(response => {
-        const resNaisei = response.data.getNaiseiById.map((item: any) => item.naisei)
-        const resNaiseiId = response.data.getNaiseiById.map((item: any) => item.id)
-        const joinedString = resNaisei.join(", ");
-        setNaisei(joinedString);
-
-        const resEvaluationType = response.data.getNaiseiById.map((item: any) => item.evaluation_type)
-        setEvaluationType(resEvaluationType)
-
-        setNaiseiId(resNaiseiId)
-
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-
-  }, [selectedId]);
-
-
-
-
   function onChange(editorState: any) {
     editorState.read(() => {
       const root = $getRoot();
@@ -180,30 +94,10 @@ export const Editor: FC<{
     });
   }
 
-  // useEffect(() => {
-  //   setNaisei("")
-  //   const apiUrl = `/api/naisei/${naiseiId}`;
-  //   const updatedData = {
-  //     // リクエストボディに送信するデータ
-  //     naisei: naisei,
-  //     evaluation_type: evaluationType,
-  //   };
-  //   axios.put(apiUrl, updatedData)
-  //     .then(response => {
-  //       toast.success('Naiseiをアップデートしました!!')
-  //       return response
-  //     })
-  //     .catch(error => {
-  //       console.error('Error fetching data:', error);
-  //     });
-  //   // toast.success('Naiseiをアップデートしました!!')
-
-  // }, [naiseiId])
-
   const handleUpdate = async (e: SyntheticEvent) => {
     e.preventDefault();
     setNaisei("")
-    const apiUrl = `/api/naisei/${naiseiId}`;
+    const apiUrl = `/api/naisei/${selectedId}`;
     const updatedData = {
       // リクエストボディに送信するデータ
       naisei: naisei,
@@ -212,15 +106,14 @@ export const Editor: FC<{
     axios.put(apiUrl, updatedData)
       .then(response => {
         toast.success('Updated Naisei!!!!')
+        fetch()
         return response
       })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-    // toast.success('Naiseiをアップデートしました!!')
-
-
   };
+  console.log("naisei", naisei);
 
 
   const initialConfig = {
@@ -232,7 +125,7 @@ export const Editor: FC<{
   };
 
   if (!naisei) return <></>
-
+  if (!isLoading) return <div className='text-white'>loading</div>
   return (
     <div className={styles.wrapper}>
       <LexicalComposer initialConfig={initialConfig}>
@@ -300,7 +193,6 @@ export const Editor: FC<{
         {/* <TreeViewPlugin /> */}
         {/* <AutoFocusPlugin /> */}
         {/* <MarkdownShortcutPlugin transformers={TRANSFORMERS} /> */}
-        {/* <MyCustomAutoFocusPlugin /> */}
         {/* <ExportPlugin exportAsHTML={exportAsHTML} /> */}
         <ExportPluginJson exportAsJSON={exportAsJson} />
         {/* <ImportPlugin /> */}
