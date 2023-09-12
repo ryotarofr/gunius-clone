@@ -43,6 +43,7 @@ export default function Calendar() {
           onSelect={setSelectedDay}
           numberOfMonths={1}
         />
+
       </div>
       <div className='hidden md:block'>
         <style>{css}</style>
@@ -58,6 +59,7 @@ export default function Calendar() {
           onSelect={setSelectedDay}
           numberOfMonths={2}
         />
+        <i className={style.i}></i>
       </div>
     </>
   );

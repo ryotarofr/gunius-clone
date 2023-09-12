@@ -94,7 +94,7 @@ const EditorPage = () => {
       <div>
         <HeaderNav />
         <div className="">
-          <div className="text-white text-center text-lg">
+          <div className="text-white text-center text-2xl">
             <span className="border-b italic">Activity</span>
           </div>
           {naiseiId ?

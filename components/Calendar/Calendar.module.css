@@ -21,6 +21,7 @@ color: rgb(219, 202, 223);
   cursor: pointer;
   transition: border-color 0.25s;
   -webkit-tap-highlight-color: transparent;
+  /* background-color: #b0ffe676; */
 }
 
 @media screen and (max-width:430px) {
@@ -32,16 +33,5 @@ color: rgb(219, 202, 223);
     /* テキストを中央寄せにする */
     text-align: center;
   }
-
-  .container button {
-    /* ボタンの色を変更 */
-    /* background-color: rgb(219, 202, 223); */
-    /* color: white; */
-    /* ボタンのサイズを小さくする */
-    min-width: 40px;
-    height: 40px;
-    font-size: 0.8em;
-    /* ボーダーを表示する */
-    /* border-color: rgb(219, 202, 223); */
-  }
 }
+
