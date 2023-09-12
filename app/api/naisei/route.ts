@@ -17,7 +17,11 @@ export async function main() {
 export const GET = async (req: Request, res: NextResponse) => {
   try {
     await main();
+    const { userId } = auth();
     const allNaisei = await prismadb.naisei.findMany({
+      where: {
+        userId: userId
+      }
     });
     return NextResponse.json({ message: "Success", allNaisei }, { status: 200 });
   } catch (err) {
