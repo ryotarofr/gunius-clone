@@ -38,7 +38,7 @@ export const LandingHero = () => {
         NAISEI supports psychological wellbeing.
       </div>
       <div className="relative bottom-80">
-        <Link href={isSignedIn ? "/editor" : "/sign-up"}>
+        <Link href={isSignedIn ? "/dashboard" : "/sign-up"}>
           <Button variant="getStart" className="md:text-lg p-4 md:p-6 rounded-full font-semibold">
             You can start for free.
           </Button>

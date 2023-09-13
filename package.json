@@ -37,6 +37,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
+    "gsap": "^3.12.2",
     "lucide-react": "^0.259.0",
     "maath": "^0.7.0",
     "micro": "^10.0.1",

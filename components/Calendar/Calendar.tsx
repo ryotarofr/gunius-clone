@@ -19,6 +19,7 @@ import { CaptionProps, DayPicker, useNavigation } from 'react-day-picker';
 import style from "./Calendar.module.css"
 import 'react-day-picker/dist/style.css';
 import { useDateStore } from '@/hooks/SelectDateStore';
+import { Activity } from './Activity';
 
 
 export default function Calendar() {
@@ -61,6 +62,7 @@ export default function Calendar() {
         />
         <i className={style.i}></i>
       </div>
+      <Activity />
     </>
   );
 }
