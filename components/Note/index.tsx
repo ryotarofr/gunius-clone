@@ -52,7 +52,7 @@ export const Note = () => {
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mx-4">
       <div className="max-w-2xl">
         <div className="text-center pt-4">
           <span className="mt-8 px-2 text-indigo-200 text-2xl font-bold italic border-b">Note</span>
