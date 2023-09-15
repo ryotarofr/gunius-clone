@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
-import Navbar from "@/components/Navbar";
 import { Sidebar } from "@/components/sidebar";
 import { checkSubscription } from "@/lib/subscription";
 import { getApiLimitCount } from "@/lib/api-limit";
 import Image from "next/image"
 import Link from "next/link";
 import { Montserrat } from "next/font/google";
+import Navbar from "@/components/navbar";
 
 // export const dynamic = "force-dynamic"
 
