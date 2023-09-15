@@ -24,7 +24,9 @@ import { InlineToolbarPlugin } from '../plugins/InlineToolbarPlugin';
 import { useNaiseiIdStore } from '@/hooks/useNaiseiIdStore';
 import { Button } from '../ui/button';
 import useGetAllNaisei from '@/hooks/useGetNaiseiAll';
-
+import EmojisPlugin from '../plugins/EmojisPlugin';
+import EmojiPickerPlugin from '../plugins/EmojiPickerPlugin';
+import ComponentPickerMenuPlugin from '../plugins/ComponentPickerPlugin';
 
 const EvaluationType = {
   A: 'A',
@@ -130,19 +132,23 @@ export const Editor: FC<{
     <div className={styles.wrapper}>
       <LexicalComposer initialConfig={initialConfig}>
         {/* <ImportPluginHTML defaultContentAsHTML={defaultContentAsHTML} /> */}
-        <ToolbarPlugin />
-        <InlineToolbarPlugin />
-        <div className={styles.editorContainer}>
-          {/* <PlainTextPlugin
+        <div className='z-20 sticky top-0 bg-slate-500/40'>
+          <ToolbarPlugin />
+          <InlineToolbarPlugin />
+        </div>
+        <div className='z-10'>
+          <div className={styles.editorContainer}>
+            {/* <PlainTextPlugin
             contentEditable={<ContentEditable />}
             placeholder={<div>write your naisei</div>}
             ErrorBoundary={LexicalErrorBoundary}
           /> */}
-          <RichTextPlugin
-            contentEditable={<ContentEditable className={styles.contentEditable} />}
-            placeholder={<>write your naisei</>}
-            ErrorBoundary={LexicalErrorBoundary}
-          />
+            <RichTextPlugin
+              contentEditable={<ContentEditable className={styles.contentEditable} />}
+              placeholder={<>write your naisei</>}
+              ErrorBoundary={LexicalErrorBoundary}
+            />
+          </div>
         </div>
         <OnChangePlugin onChange={onChange} />
         {/* {data ? */}
@@ -198,6 +204,9 @@ export const Editor: FC<{
         {/* <ImportPlugin /> */}
 
 
+        <EmojiPickerPlugin />
+        {/* <EmojisPlugin /> */}
+        <ComponentPickerMenuPlugin />
       </LexicalComposer>
     </div>
   );

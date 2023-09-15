@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-// import prisma from "../../../../prisma";
 import { PrismaClient } from "@prisma/client";
 import { auth } from "@clerk/nextjs";
 import prismadb from "@/lib/prismadb";
@@ -33,8 +32,6 @@ export const GET = async (req: Request, res: NextResponse) => {
 
 
 export const POST = async (req: Request, res: NextResponse) => {
-  console.log("POST");
-
   try {
     const { userId } = auth();
 

@@ -34,3 +34,8 @@ npx prisma db push
 ```shell
 npm run dev
 ```
+
+### SetUp Stripe
+test env:
+webhook api liten ->
+use customer portal link
